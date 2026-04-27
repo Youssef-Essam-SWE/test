@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect } from "react"
 import { useSearchParams } from "next/navigation"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
@@ -13,8 +13,13 @@ export default function ShopPage() {
   const searchParams = useSearchParams()
   const categoryParam = searchParams.get("category")
 
-  const [selectedCategory, setSelectedCategory] = useState<string>(categoryParam || "all")
+  const [selectedCategory, setSelectedCategory] = useState<string>("all")
   const [sortBy, setSortBy] = useState<string>("featured")
+
+  // Sync state with URL search params
+  useEffect(() => {
+    setSelectedCategory(categoryParam || "all")
+  }, [categoryParam])
 
   const filteredAndSortedProducts = useMemo(() => {
     let filtered = selectedCategory === "all" ? products : products.filter((p) => p.category === selectedCategory)
