@@ -29,28 +29,36 @@ export default function AdminDashboard() {
       {/* Sidebar */}
       <aside className="w-64 bg-background border-r border-border hidden md:flex flex-col">
         <div className="p-6 border-b border-border">
-          <h2 className="font-serif text-2xl font-bold">Artisan Admin</h2>
+          <Link href="/" className="font-serif text-2xl font-bold hover:text-primary transition-colors">Artisan Admin</Link>
         </div>
         <nav className="flex-1 p-4 space-y-2">
-          <Button variant="ghost" className="w-full justify-start gap-3 bg-muted">
-            <LayoutDashboard className="h-5 w-5" />
-            Dashboard
+          <Button variant="ghost" asChild className="w-full justify-start gap-3 bg-muted">
+            <Link href="/admin/dashboard">
+              <LayoutDashboard className="h-5 w-5" />
+              Dashboard
+            </Link>
           </Button>
-          <Button variant="ghost" className="w-full justify-start gap-3">
-            <Package className="h-5 w-5" />
-            Products
+          <Button variant="ghost" asChild className="w-full justify-start gap-3">
+            <Link href="/admin/dashboard">
+              <Package className="h-5 w-5" />
+              Products
+            </Link>
           </Button>
-          <Button variant="ghost" className="w-full justify-start gap-3">
-            <ShoppingCart className="h-5 w-5" />
-            Orders
+          <Button variant="ghost" asChild className="w-full justify-start gap-3">
+            <Link href="/admin/dashboard">
+              <ShoppingCart className="h-5 w-5" />
+              Orders
+            </Link>
           </Button>
-          <Button variant="ghost" className="w-full justify-start gap-3">
-            <Users className="h-5 w-5" />
-            Customers
+          <Button variant="ghost" asChild className="w-full justify-start gap-3">
+            <Link href="/admin/dashboard">
+              <Users className="h-5 w-5" />
+              Customers
+            </Link>
           </Button>
         </nav>
         <div className="p-4 border-t border-border">
-          <Button variant="ghost" className="w-full justify-start gap-3 text-destructive hover:text-destructive" onClick={logout}>
+          <Button variant="ghost" className="w-full justify-start gap-3 text-destructive hover:text-destructive hover:bg-destructive/10" onClick={logout}>
             <LogOut className="h-5 w-5" />
             Logout
           </Button>
