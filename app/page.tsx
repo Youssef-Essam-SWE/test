@@ -5,6 +5,7 @@ import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { ProductCard } from "@/components/product-card"
 import { getFeaturedProducts } from "@/lib/products"
+import { Input } from "@/components/ui/input"
 import { ArrowRight, Truck, Shield, Sparkles } from "lucide-react"
 
 export default function HomePage() {
