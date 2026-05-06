@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useAdmin } from "@/lib/admin-context"
 import { useProducts } from "@/lib/product-context"
 import { useRouter } from "next/navigation"
@@ -19,6 +19,12 @@ export default function AddProductPage() {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
 
+  useEffect(() => {
+    if (!isLoggedIn) {
+      router.push("/admin/login")
+    }
+  }, [isLoggedIn, router])
+
   const [formData, setFormData] = useState({
     name: "",
     price: "",
@@ -30,7 +36,6 @@ export default function AddProductPage() {
   })
 
   if (!isLoggedIn) {
-    if (typeof window !== "undefined") router.push("/admin/login")
     return null
   }
 

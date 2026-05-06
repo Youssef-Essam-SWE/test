@@ -6,9 +6,12 @@ import { Footer } from "@/components/footer"
 import { useProducts } from "@/lib/product-context"
 import { ProductDetails } from "@/components/product-details"
 
-export default function ProductPage({ params }: { params: { id: string } }) {
+import React from "react"
+
+export default function ProductPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = React.use(params)
   const { products } = useProducts()
-  const product = products.find((p) => p.id === params.id)
+  const product = products.find((p) => p.id === id)
 
   if (!product) {
     notFound()
