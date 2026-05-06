@@ -178,25 +178,6 @@ export const products: Product[] = [
     category: "bedroom",
     inStock: true,
   },
-  {
-    id: "19",
-    name: "Standing Desk",
-    description: "Electric height-adjustable desk with memory presets. Natural bamboo top.",
-    price: 749,
-    image: "/placeholder.svg",
-    category: "office",
-    featured: true,
-    inStock: true,
-  },
-  {
-    id: "20",
-    name: "Leather Bar Stools",
-    description: "Set of 2 bar stools with cognac leather seats and industrial steel frames.",
-    price: 450,
-    image: "/placeholder.svg",
-    category: "dining",
-    inStock: true,
-  },
 ]
 
 export function getProductById(id: string): Product | undefined {
