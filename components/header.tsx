@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { ShoppingCart, Menu, Search, Heart } from "lucide-react"
+import { ShoppingCart, Menu, Search, Heart, ShieldCheck } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
@@ -67,6 +67,12 @@ export function Header() {
                 />
               </form>
             </div>
+            <Button variant="ghost" size="sm" asChild className="hidden md:flex gap-2 text-primary hover:text-primary hover:bg-primary/10 mr-2">
+              <Link href="/admin/dashboard">
+                <ShieldCheck className="h-4 w-4" />
+                <span className="font-medium">Admin</span>
+              </Link>
+            </Button>
 
             <Link href="/wishlist">
               <Button variant="ghost" size="icon" className="relative">
