@@ -5,11 +5,12 @@ import { useSearchParams } from "next/navigation"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { ProductCard } from "@/components/product-card"
-import { products } from "@/lib/products"
+import { useProducts } from "@/lib/product-context"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 export default function ShopPage() {
+  const { products } = useProducts()
   const searchParams = useSearchParams()
   const categoryParam = searchParams.get("category")
   const queryParam = searchParams.get("q")

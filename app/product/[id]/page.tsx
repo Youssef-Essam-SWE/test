@@ -1,18 +1,14 @@
+"use client"
+
 import { notFound } from "next/navigation"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
-import { getProductById, products } from "@/lib/products"
+import { useProducts } from "@/lib/product-context"
 import { ProductDetails } from "@/components/product-details"
 
-export async function generateStaticParams() {
-  return products.map((product) => ({
-    id: product.id,
-  }))
-}
-
-export default async function ProductPage({ params }: { params: Promise<{ id: string }> }) {
-  const { id } = await params
-  const product = getProductById(id)
+export default function ProductPage({ params }: { params: { id: string } }) {
+  const { products } = useProducts()
+  const product = products.find((p) => p.id === params.id)
 
   if (!product) {
     notFound()

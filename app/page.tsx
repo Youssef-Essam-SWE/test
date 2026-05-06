@@ -1,15 +1,20 @@
+"use client"
+
 import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
+
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { ProductCard } from "@/components/product-card"
-import { getFeaturedProducts } from "@/lib/products"
+import { useProducts } from "@/lib/product-context"
 import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
 import { ArrowRight, Truck, Shield, Sparkles } from "lucide-react"
 
 export default function HomePage() {
-  const featuredProducts = getFeaturedProducts()
+  const { products } = useProducts()
+  const featuredProducts = products.filter(p => p.featured).slice(0, 4)
 
   return (
     <div className="flex min-h-screen flex-col">
