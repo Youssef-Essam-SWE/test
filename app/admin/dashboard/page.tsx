@@ -2,7 +2,6 @@
 
 import { useAdmin } from "@/lib/admin-context"
 import { useProducts } from "@/lib/product-context"
-import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
