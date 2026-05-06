@@ -9,6 +9,7 @@ import { useCart } from "@/lib/cart-context"
 import { useWishlist } from "@/lib/wishlist-context"
 import { useProducts } from "@/lib/product-context"
 import { useState, useEffect, useRef } from "react"
+import { createPortal } from "react-dom"
 import Image from "next/image"
 
 export function Header() {
@@ -149,77 +150,103 @@ export function Header() {
         </div>
       </div>
 
-      {/* Search Overlay */}
-      {isSearchOpen && (
-        <div className="fixed inset-0 z-[100] bg-background/95 backdrop-blur-xl animate-in fade-in duration-300">
-          <div className="container mx-auto px-4 pt-20">
+      {/* Search Overlay using Portal */}
+      {isSearchOpen && typeof document !== "undefined" && createPortal(
+        <div className="fixed inset-0 z-[9999] bg-background animate-in fade-in zoom-in-95 duration-200">
+          <div className="container mx-auto px-4 py-8 h-full flex flex-col">
             <div className="flex justify-between items-center mb-12">
               <h2 className="text-4xl font-serif font-bold">Search Catalog</h2>
-              <Button variant="ghost" size="icon" onClick={() => setIsSearchOpen(false)} className="rounded-full h-12 w-12 hover:bg-muted">
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                onClick={() => {
+                  setIsSearchOpen(false)
+                  setSearchQuery("")
+                }} 
+                className="rounded-full h-12 w-12 hover:bg-muted"
+              >
                 <X className="h-8 w-8" />
               </Button>
             </div>
 
-            <div className="max-w-3xl mx-auto">
+            <div className="max-w-3xl mx-auto w-full">
               <div className="relative group">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-6 w-6 text-muted-foreground group-focus-within:text-primary transition-colors" />
+                <Search className="absolute left-6 top-1/2 -translate-y-1/2 h-8 w-8 text-muted-foreground group-focus-within:text-primary transition-colors" />
                 <Input 
                   ref={searchInputRef}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="What are you looking for? (e.g. sofa, table, bedroom...)" 
-                  className="h-16 pl-14 text-2xl bg-muted/50 border-none focus-visible:ring-2 focus-visible:ring-primary rounded-2xl"
+                  placeholder="What are you looking for?" 
+                  className="h-20 pl-16 pr-8 text-3xl bg-muted/30 border-2 border-transparent focus-visible:border-primary focus-visible:ring-0 rounded-2xl transition-all"
                 />
               </div>
 
-              {/* Live Results */}
-              <div className="mt-12">
+              {/* Live Results Area */}
+              <div className="mt-12 overflow-y-auto max-h-[60vh] pr-2 custom-scrollbar">
                 {filteredResults.length > 0 ? (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="grid grid-cols-1 gap-4">
+                    <p className="text-sm font-bold uppercase tracking-widest text-muted-foreground mb-2">Search Results</p>
                     {filteredResults.map((product) => (
                       <Link 
                         key={product.id} 
                         href={`/product/${product.id}`}
-                        onClick={() => setIsSearchOpen(false)}
-                        className="flex items-center gap-4 p-3 rounded-xl hover:bg-muted transition-colors group"
+                        onClick={() => {
+                          setIsSearchOpen(false)
+                          setSearchQuery("")
+                        }}
+                        className="flex items-center gap-6 p-4 rounded-2xl bg-muted/20 hover:bg-muted/50 border border-transparent hover:border-primary/20 transition-all group"
                       >
-                        <div className="relative h-20 w-20 rounded-lg overflow-hidden shrink-0">
+                        <div className="relative h-24 w-24 rounded-xl overflow-hidden shrink-0 shadow-sm">
                           <Image src={product.image} alt={product.name} fill className="object-cover group-hover:scale-110 transition-transform duration-500" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <p className="font-bold text-lg truncate">{product.name}</p>
-                          <p className="text-sm text-muted-foreground capitalize">{product.category.replace("-", " ")}</p>
-                          <p className="text-primary font-bold mt-1">${product.price.toLocaleString()}</p>
+                          <div className="flex justify-between items-start">
+                            <div>
+                              <p className="font-bold text-xl mb-1">{product.name}</p>
+                              <p className="text-sm text-muted-foreground capitalize">{product.category.replace("-", " ")}</p>
+                            </div>
+                            <p className="text-primary font-bold text-xl">${product.price.toLocaleString()}</p>
+                          </div>
                         </div>
-                        <ArrowRight className="h-5 w-5 text-muted-foreground opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all" />
+                        <ArrowRight className="h-6 w-6 text-primary opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all" />
                       </Link>
                     ))}
                   </div>
                 ) : searchQuery.trim() !== "" ? (
-                  <div className="text-center py-20">
-                    <p className="text-xl text-muted-foreground">No products found for "{searchQuery}"</p>
+                  <div className="text-center py-20 bg-muted/10 rounded-3xl">
+                    <p className="text-2xl text-muted-foreground">No products found for <span className="text-foreground font-bold italic">"{searchQuery}"</span></p>
+                    <Button variant="link" onClick={() => setSearchQuery("")} className="mt-4 text-primary">Clear search and try again</Button>
                   </div>
                 ) : (
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <p className="col-span-full text-sm font-bold uppercase tracking-wider text-muted-foreground mb-2">Popular Categories</p>
-                    {["Living Room", "Bedroom", "Dining", "Office"].map(cat => (
-                      <Button 
-                        key={cat} 
-                        variant="outline" 
-                        className="justify-start h-12 text-md hover:bg-primary/5 hover:border-primary transition-all"
-                        asChild
-                      >
-                        <Link href={`/shop?category=${cat.toLowerCase().replace(" ", "-")}`} onClick={() => setIsSearchOpen(false)}>
-                          {cat}
-                        </Link>
-                      </Button>
-                    ))}
+                  <div className="animate-in slide-in-from-bottom-4 duration-500">
+                    <p className="text-sm font-bold uppercase tracking-widest text-muted-foreground mb-6">Popular Categories</p>
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                      {[
+                        { name: "Living Room", icon: "🛋️" },
+                        { name: "Bedroom", icon: "🛏️" },
+                        { name: "Dining", icon: "🍽️" },
+                        { name: "Office", icon: "💼" }
+                      ].map(cat => (
+                        <Button 
+                          key={cat.name} 
+                          variant="outline" 
+                          className="justify-start h-20 text-lg hover:bg-primary/5 hover:border-primary hover:scale-[1.02] transition-all group rounded-2xl"
+                          asChild
+                        >
+                          <Link href={`/shop?category=${cat.name.toLowerCase().replace(" ", "-")}`} onClick={() => setIsSearchOpen(false)}>
+                            <span className="mr-3 text-2xl group-hover:scale-125 transition-transform">{cat.icon}</span>
+                            {cat.name}
+                          </Link>
+                        </Button>
+                      ))}
+                    </div>
                   </div>
                 )}
               </div>
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </header>
   )
