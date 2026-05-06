@@ -10,8 +10,21 @@ import { LayoutDashboard, Package, ShoppingCart, Users, LogOut, Plus, Pencil, Tr
 import Image from "next/image"
 import Link from "next/link"
 import { useSearchParams, useRouter } from "next/navigation"
+import { Suspense } from "react"
 
 export default function AdminDashboard() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+      </div>
+    }>
+      <DashboardContent />
+    </Suspense>
+  )
+}
+
+function DashboardContent() {
   const { isLoggedIn, isLoading, logout } = useAdmin()
   const { products, deleteProduct } = useProducts()
   const router = useRouter()
