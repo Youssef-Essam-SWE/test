@@ -10,12 +10,21 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { LayoutDashboard, Package, ShoppingCart, Users, LogOut, Plus, Pencil, Trash2 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
+import { useSearchParams, useRouter } from "next/navigation"
 
 export default function AdminDashboard() {
   const { isLoggedIn, isLoading, logout } = useAdmin()
   const { products, deleteProduct } = useProducts()
   const router = useRouter()
-  const [activeTab, setActiveTab] = useState("dashboard")
+  const searchParams = useSearchParams()
+  const initialTab = searchParams.get("tab") || "dashboard"
+  const [activeTab, setActiveTab] = useState(initialTab)
+
+  // Sync tab with URL
+  const handleTabChange = (tab: string) => {
+    setActiveTab(tab)
+    router.push(`/admin/dashboard?tab=${tab}`)
+  }
 
   useEffect(() => {
     if (!isLoading && !isLoggedIn) {
@@ -44,7 +53,7 @@ export default function AdminDashboard() {
           <Button 
             variant="ghost" 
             className={`w-full justify-start gap-3 ${activeTab === "dashboard" ? "bg-muted" : ""}`}
-            onClick={() => setActiveTab("dashboard")}
+            onClick={() => handleTabChange("dashboard")}
           >
             <LayoutDashboard className="h-5 w-5" />
             Dashboard
@@ -52,7 +61,7 @@ export default function AdminDashboard() {
           <Button 
             variant="ghost" 
             className={`w-full justify-start gap-3 ${activeTab === "products" ? "bg-muted" : ""}`}
-            onClick={() => setActiveTab("products")}
+            onClick={() => handleTabChange("products")}
           >
             <Package className="h-5 w-5" />
             Products
@@ -60,7 +69,7 @@ export default function AdminDashboard() {
           <Button 
             variant="ghost" 
             className={`w-full justify-start gap-3 ${activeTab === "orders" ? "bg-muted" : ""}`}
-            onClick={() => setActiveTab("orders")}
+            onClick={() => handleTabChange("orders")}
           >
             <ShoppingCart className="h-5 w-5" />
             Orders
@@ -68,7 +77,7 @@ export default function AdminDashboard() {
           <Button 
             variant="ghost" 
             className={`w-full justify-start gap-3 ${activeTab === "customers" ? "bg-muted" : ""}`}
-            onClick={() => setActiveTab("customers")}
+            onClick={() => handleTabChange("customers")}
           >
             <Users className="h-5 w-5" />
             Customers
