@@ -61,4 +61,4 @@ export default function FAQPage() {
       <Footer />
     </div>
   )
-import Link from "next/link"
+}
