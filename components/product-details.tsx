@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { useCart } from "@/lib/cart-context"
 import { useWishlist } from "@/lib/wishlist-context"
-import { ShoppingCart, Truck, RotateCcw, Shield, Heart } from "lucide-react"
+import { ShoppingCart, Truck, RotateCcw, Shield, Heart, Star } from "lucide-react"
 import { useToast } from "@/hooks/use-toast"
 import type { Product } from "@/lib/products"
 
