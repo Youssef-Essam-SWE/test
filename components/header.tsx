@@ -1,17 +1,20 @@
 "use client"
 
 import Link from "next/link"
-import { ShoppingCart, Menu, Search } from "lucide-react"
+import { ShoppingCart, Menu, Search, Heart } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { useCart } from "@/lib/cart-context"
+import { useWishlist } from "@/lib/wishlist-context"
 import { useRouter } from "next/navigation"
 
 export function Header() {
   const { items } = useCart()
+  const { wishlist } = useWishlist()
   const router = useRouter()
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0)
+  const wishlistCount = wishlist.length
 
   const navigation = [
     { name: "Shop", href: "/shop" },
@@ -62,6 +65,18 @@ export function Header() {
                 />
               </form>
             </div>
+
+            <Link href="/wishlist">
+              <Button variant="ghost" size="icon" className="relative">
+                <Heart className={`h-5 w-5 ${wishlistCount > 0 ? "fill-red-500 text-red-500" : ""}`} />
+                {wishlistCount > 0 && (
+                  <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-red-500 text-white text-xs flex items-center justify-center animate-in zoom-in">
+                    {wishlistCount}
+                  </span>
+                )}
+                <span className="sr-only">Wishlist</span>
+              </Button>
+            </Link>
 
             <Link href="/cart">
               <Button variant="ghost" size="icon" className="relative">

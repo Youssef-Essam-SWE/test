@@ -2,6 +2,9 @@ import Link from "next/link"
 import Image from "next/image"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
+import { Heart } from "lucide-react"
+import { useWishlist } from "@/lib/wishlist-context"
 import type { Product } from "@/lib/products"
 
 interface ProductCardProps {
@@ -9,6 +12,19 @@ interface ProductCardProps {
 }
 
 export function ProductCard({ product }: ProductCardProps) {
+  const { isInWishlist, addToWishlist, removeFromWishlist } = useWishlist()
+  const isWishlisted = isInWishlist(product.id)
+
+  const toggleWishlist = (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    if (isWishlisted) {
+      removeFromWishlist(product.id)
+    } else {
+      addToWishlist(product)
+    }
+  }
+
   return (
     <Link href={`/product/${product.id}`}>
       <Card className="group overflow-hidden transition-all hover:shadow-lg">
@@ -20,6 +36,16 @@ export function ProductCard({ product }: ProductCardProps) {
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="object-cover transition-transform group-hover:scale-105"
           />
+          <Button
+            variant="ghost"
+            size="icon"
+            className={`absolute top-3 left-3 z-10 rounded-full bg-white/80 backdrop-blur-sm transition-colors hover:bg-white ${
+              isWishlisted ? "text-red-500" : "text-muted-foreground"
+            }`}
+            onClick={toggleWishlist}
+          >
+            <Heart className={`h-5 w-5 ${isWishlisted ? "fill-current" : ""}`} />
+          </Button>
           {!product.inStock && (
             <Badge className="absolute top-3 right-3" variant="secondary">
               Out of Stock

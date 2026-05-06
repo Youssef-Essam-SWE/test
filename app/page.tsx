@@ -143,6 +143,31 @@ export default function HomePage() {
             </div>
           </div>
         </section>
+        {/* Newsletter */}
+        <section className="py-20 bg-primary text-primary-foreground">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 className="font-serif text-3xl md:text-4xl font-bold mb-4 text-balance">
+              Join the Artisan Inner Circle
+            </h2>
+            <p className="text-primary-foreground/80 mb-8 max-w-2xl mx-auto text-lg">
+              Subscribe to receive exclusive offers, early access to new collections, and interior design inspiration.
+            </p>
+            <form className="max-w-md mx-auto flex flex-col sm:flex-row gap-3">
+              <Input
+                type="email"
+                placeholder="Enter your email"
+                className="bg-primary-foreground text-primary border-none focus-visible:ring-offset-0 focus-visible:ring-accent"
+                required
+              />
+              <Button variant="accent" size="lg" className="shrink-0">
+                Subscribe Now
+              </Button>
+            </form>
+            <p className="mt-4 text-sm text-primary-foreground/60">
+              By subscribing, you agree to our Privacy Policy and Terms of Service.
+            </p>
+          </div>
+        </section>
       </main>
 
       <Footer />
