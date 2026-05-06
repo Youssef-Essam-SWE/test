@@ -33,6 +33,7 @@ export function ProductDetails({ product }: { product: Product }) {
           src={product.image || "/placeholder.svg"}
           alt={product.name}
           fill
+          sizes="(max-width: 1024px) 100vw, 50vw"
           className="object-cover"
           priority
         />

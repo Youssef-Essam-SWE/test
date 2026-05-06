@@ -22,6 +22,7 @@ export default function HomePage() {
               src="/modern-living-room-furniture-interior.jpg"
               alt="Modern living room"
               fill
+              sizes="100vw"
               className="object-cover brightness-75"
               priority
             />
@@ -131,6 +132,7 @@ export default function HomePage() {
                     src={category.image || "/placeholder.svg"}
                     alt={category.name}
                     fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                     className="object-cover transition-transform group-hover:scale-110"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end">

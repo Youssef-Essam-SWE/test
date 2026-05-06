@@ -17,6 +17,7 @@ export function ProductCard({ product }: ProductCardProps) {
             src={product.image || "/placeholder.svg"}
             alt={product.name}
             fill
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="object-cover transition-transform group-hover:scale-105"
           />
           {!product.inStock && (
