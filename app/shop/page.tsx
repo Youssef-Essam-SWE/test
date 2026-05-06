@@ -12,6 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 export default function ShopPage() {
   const searchParams = useSearchParams()
   const categoryParam = searchParams.get("category")
+  const queryParam = searchParams.get("q")
 
   const [selectedCategory, setSelectedCategory] = useState<string>("all")
   const [sortBy, setSortBy] = useState<string>("featured")
@@ -22,7 +23,20 @@ export default function ShopPage() {
   }, [categoryParam])
 
   const filteredAndSortedProducts = useMemo(() => {
-    let filtered = selectedCategory === "all" ? products : products.filter((p) => p.category === selectedCategory)
+    let filtered = products
+
+    // Filter by search query
+    if (queryParam) {
+      const q = queryParam.toLowerCase()
+      filtered = filtered.filter(
+        (p) => p.name.toLowerCase().includes(q) || p.description.toLowerCase().includes(q),
+      )
+    }
+
+    // Filter by category
+    if (selectedCategory !== "all") {
+      filtered = filtered.filter((p) => p.category === selectedCategory)
+    }
 
     // Sort products
     switch (sortBy) {
@@ -45,7 +59,7 @@ export default function ShopPage() {
     }
 
     return filtered
-  }, [selectedCategory, sortBy])
+  }, [selectedCategory, sortBy, queryParam])
 
   const categories = [
     { value: "all", label: "All Products" },
@@ -63,8 +77,14 @@ export default function ShopPage() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
           {/* Header */}
           <div className="mb-8">
-            <h1 className="font-serif text-4xl font-bold mb-4">Shop Our Collection</h1>
-            <p className="text-muted-foreground text-lg">Browse our complete range of handcrafted furniture pieces</p>
+            <h1 className="font-serif text-4xl font-bold mb-4">
+              {queryParam ? `Search Results for "${queryParam}"` : "Shop Our Collection"}
+            </h1>
+            <p className="text-muted-foreground text-lg">
+              {queryParam 
+                ? `Found ${filteredAndSortedProducts.length} products matching your search.`
+                : "Browse our complete range of handcrafted furniture pieces"}
+            </p>
           </div>
 
           {/* Filters */}

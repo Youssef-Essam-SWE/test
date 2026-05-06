@@ -3,11 +3,14 @@
 import Link from "next/link"
 import { ShoppingCart, Menu, Search } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { useCart } from "@/lib/cart-context"
+import { useRouter } from "next/navigation"
 
 export function Header() {
   const { items } = useCart()
+  const router = useRouter()
   const itemCount = items.reduce((sum, item) => sum + item.quantity, 0)
 
   const navigation = [
@@ -44,10 +47,25 @@ export function Header() {
 
           {/* Actions */}
           <div className="flex items-center gap-2">
-            <Button variant="ghost" size="icon" className="hidden sm:inline-flex">
-              <Search className="h-5 w-5" />
-              <span className="sr-only">Search</span>
-            </Button>
+            <div className="hidden sm:block">
+              <form 
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  const formData = new FormData(e.currentTarget);
+                  const q = formData.get('q');
+                  if (q) router.push(`/shop?q=${q}`);
+                }}
+                className="relative"
+              >
+                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+                <Input
+                  name="q"
+                  type="search"
+                  placeholder="Search products..."
+                  className="pl-8 w-[200px] lg:w-[300px] bg-muted/50"
+                />
+              </form>
+            </div>
 
             <Link href="/cart">
               <Button variant="ghost" size="icon" className="relative">
