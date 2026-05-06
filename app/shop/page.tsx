@@ -1,14 +1,14 @@
 "use client"
 
-import { useState, useMemo, useEffect } from "react"
-import { useSearchParams } from "next/navigation"
-import { Suspense } from "react"
+import { useState, useMemo, useEffect, Suspense } from "react"
+import { useSearchParams, useRouter } from "next/navigation"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { ProductCard } from "@/components/product-card"
 import { useProducts } from "@/lib/product-context"
 import { Button } from "@/components/ui/button"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import Image from "next/image"
 
 export default function ShopPage() {
   return (
@@ -25,15 +25,31 @@ export default function ShopPage() {
 function ShopContent() {
   const { products } = useProducts()
   const searchParams = useSearchParams()
+  const router = useRouter()
   const categoryParam = searchParams.get("category")
   const queryParam = searchParams.get("q")
 
-  const [selectedCategory, setSelectedCategory] = useState<string>("all")
+  const [selectedCategory, setSelectedCategory] = useState<string>(categoryParam || "all")
   const [sortBy, setSortBy] = useState<string>("featured")
 
-  // Sync state with URL search params
+  const handleCategoryChange = (category: string) => {
+    setSelectedCategory(category)
+    const params = new URLSearchParams(searchParams.toString())
+    if (category === "all") {
+      params.delete("category")
+    } else {
+      params.set("category", category)
+    }
+    router.push(`/shop?${params.toString()}`)
+  }
+
+  // Sync state with URL search params when they change
   useEffect(() => {
-    setSelectedCategory(categoryParam || "all")
+    if (categoryParam) {
+      setSelectedCategory(categoryParam)
+    } else {
+      setSelectedCategory("all")
+    }
   }, [categoryParam])
 
   const filteredAndSortedProducts = useMemo(() => {
@@ -73,7 +89,7 @@ function ShopContent() {
     }
 
     return filtered
-  }, [selectedCategory, sortBy, queryParam])
+  }, [selectedCategory, sortBy, queryParam, products])
 
   const categories = [
     { value: "all", label: "All Products" },
@@ -108,7 +124,7 @@ function ShopContent() {
                 <Button
                   key={cat.value}
                   variant={selectedCategory === cat.value ? "default" : "outline"}
-                  onClick={() => setSelectedCategory(cat.value)}
+                  onClick={() => handleCategoryChange(cat.value)}
                 >
                   {cat.label}
                 </Button>
@@ -128,16 +144,18 @@ function ShopContent() {
             </Select>
           </div>
 
-          {/* Products Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {filteredAndSortedProducts.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
-          </div>
-
-          {filteredAndSortedProducts.length === 0 && (
-            <div className="text-center py-12">
-              <p className="text-muted-foreground text-lg">No products found in this category.</p>
+          {/* Product Grid */}
+          {filteredAndSortedProducts.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+              {filteredAndSortedProducts.map((product) => (
+                <ProductCard key={product.id} product={product} />
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-20 bg-muted/30 rounded-xl">
+              <h2 className="text-2xl font-medium mb-2">No products found</h2>
+              <p className="text-muted-foreground mb-6">Try adjusting your filters or search query.</p>
+              <Button variant="outline" onClick={() => handleCategoryChange("all")}>Clear All Filters</Button>
             </div>
           )}
         </div>
