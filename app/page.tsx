@@ -9,7 +9,6 @@ import { Footer } from "@/components/footer"
 import { ProductCard } from "@/components/product-card"
 import { useProducts } from "@/lib/product-context"
 import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
 import { ArrowRight, Truck, Shield, Sparkles } from "lucide-react"
 
 export default function HomePage() {
