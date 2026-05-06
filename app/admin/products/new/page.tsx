@@ -14,16 +14,16 @@ import { ArrowLeft, PackagePlus } from "lucide-react"
 import Link from "next/link"
 
 export default function AddProductPage() {
-  const { isLoggedIn } = useAdmin()
+  const { isLoggedIn, isLoading } = useAdmin()
   const { addProduct } = useProducts()
   const router = useRouter()
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    if (!isLoggedIn) {
+    if (!isLoading && !isLoggedIn) {
       router.push("/admin/login")
     }
-  }, [isLoggedIn, router])
+  }, [isLoggedIn, isLoading, router])
 
   const [formData, setFormData] = useState({
     name: "",
@@ -34,6 +34,14 @@ export default function AddProductPage() {
     featured: false,
     inStock: true
   })
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+      </div>
+    )
+  }
 
   if (!isLoggedIn) {
     return null

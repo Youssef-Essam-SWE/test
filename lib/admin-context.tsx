@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation"
 
 interface AdminContextType {
   isLoggedIn: boolean
+  isLoading: boolean
   login: (email: string, pass: string) => boolean
   logout: () => void
 }
@@ -13,6 +14,7 @@ const AdminContext = createContext<AdminContextType | undefined>(undefined)
 
 export function AdminProvider({ children }: { children: React.ReactNode }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const router = useRouter()
 
   useEffect(() => {
@@ -20,6 +22,7 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
     if (auth === "true") {
       setIsLoggedIn(true)
     }
+    setIsLoading(false)
   }, [])
 
   const login = (email: string, pass: string) => {
@@ -39,7 +42,7 @@ export function AdminProvider({ children }: { children: React.ReactNode }) {
   }
 
   return (
-    <AdminContext.Provider value={{ isLoggedIn, login, logout }}>
+    <AdminContext.Provider value={{ isLoggedIn, isLoading, login, logout }}>
       {children}
     </AdminContext.Provider>
   )

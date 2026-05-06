@@ -12,15 +12,23 @@ import Image from "next/image"
 import Link from "next/link"
 
 export default function AdminDashboard() {
-  const { isLoggedIn, logout } = useAdmin()
+  const { isLoggedIn, isLoading, logout } = useAdmin()
   const { products, deleteProduct } = useProducts()
   const router = useRouter()
 
   useEffect(() => {
-    if (!isLoggedIn) {
+    if (!isLoading && !isLoggedIn) {
       router.push("/admin/login")
     }
-  }, [isLoggedIn, router])
+  }, [isLoggedIn, isLoading, router])
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary"></div>
+      </div>
+    )
+  }
 
   if (!isLoggedIn) return null
 

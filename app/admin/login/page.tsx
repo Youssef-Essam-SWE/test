@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useAdmin } from "@/lib/admin-context"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
@@ -13,8 +13,16 @@ export default function AdminLoginPage() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
-  const { login } = useAdmin()
+  const { login, isLoggedIn, isLoading } = useAdmin()
   const router = useRouter()
+
+  useEffect(() => {
+    if (!isLoading && isLoggedIn) {
+      router.push("/admin/dashboard")
+    }
+  }, [isLoggedIn, isLoading, router])
+
+  if (isLoading) return null
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
