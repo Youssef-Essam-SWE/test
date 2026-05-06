@@ -15,10 +15,6 @@ export function Header() {
 
   const navigation = [
     { name: "Shop", href: "/shop" },
-    { name: "Living Room", href: "/shop?category=living-room" },
-    { name: "Bedroom", href: "/shop?category=bedroom" },
-    { name: "Dining", href: "/shop?category=dining" },
-    { name: "Office", href: "/shop?category=office" },
     { name: "About", href: "/about" },
     { name: "Contact", href: "/contact" },
   ]
