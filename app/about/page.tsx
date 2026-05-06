@@ -1,79 +1,75 @@
-import Image from "next/image"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
-import { Button } from "@/components/ui/button"
-import Link from "next/link"
+import Image from "next/image"
 
 export default function AboutPage() {
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
-
       <main className="flex-1">
-        {/* Hero */}
-        <section className="relative h-[400px] flex items-center bg-gradient-to-r from-amber-50 to-yellow-50">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <h1 className="font-serif text-5xl font-bold text-foreground mb-4">Our Story</h1>
-            <p className="text-xl text-muted-foreground max-w-2xl">
-              Crafting exceptional furniture with passion and precision since 2020
+        {/* Hero Section */}
+        <section className="relative py-24 bg-muted">
+          <div className="container mx-auto px-4 text-center relative z-10">
+            <h1 className="font-serif text-5xl md:text-6xl font-bold mb-6">Our Story</h1>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              Crafting timeless furniture pieces that blend heritage craftsmanship with modern elegance.
             </p>
           </div>
         </section>
 
-        {/* Content */}
+        {/* Vision & Mission */}
         <section className="py-20">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-20">
-              <div>
-                <h2 className="font-serif text-3xl font-bold mb-4">Where Craftsmanship Meets Modern Design</h2>
-                <p className="text-muted-foreground leading-relaxed mb-4">
-                  Founded in 2020, Artisan began with a simple mission: to create furniture that combines timeless
-                  design with exceptional craftsmanship. What started as a small workshop has grown into a trusted name
-                  in contemporary home furnishings.
-                </p>
-                <p className="text-muted-foreground leading-relaxed mb-4">
-                  Every piece we create is handcrafted by skilled artisans who take pride in their work. We source
-                  sustainable materials and use traditional techniques passed down through generations, ensuring each
-                  item is built to last.
-                </p>
-                <p className="text-muted-foreground leading-relaxed">
-                  Our commitment to quality extends beyond the finished product. We believe in transparent practices,
-                  ethical sourcing, and creating furniture that brings joy to your home for years to come.
-                </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+              <div className="relative aspect-square rounded-2xl overflow-hidden shadow-2xl">
+                <Image
+                  src="https://images.unsplash.com/photo-1581539250439-c96689b516dd?auto=format&fit=crop&q=80&w=1000"
+                  alt="Craftsmanship"
+                  fill
+                  className="object-cover"
+                />
               </div>
-              <div className="relative aspect-[4/3] rounded-lg overflow-hidden">
-                <Image src="/modern-living-room-furniture-interior.jpg" alt="Beautifully designed furniture in modern home" fill className="object-cover" />
+              <div className="space-y-6">
+                <h2 className="font-serif text-3xl font-bold">The Artisan Philosophy</h2>
+                <p className="text-lg text-muted-foreground leading-relaxed">
+                  Founded in 2010, Artisan was born out of a passion for authentic materials and traditional woodworking techniques. We believe that furniture should not just occupy space, but tell a story of quality, durability, and art.
+                </p>
+                <p className="text-lg text-muted-foreground leading-relaxed">
+                  Every piece in our collection is meticulously crafted by master artisans who pour decades of experience into every joint, every finish, and every detail.
+                </p>
               </div>
             </div>
+          </div>
+        </section>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
-              <div className="text-center">
-                <div className="text-4xl font-bold text-primary mb-2">500+</div>
-                <p className="text-muted-foreground">Pieces Crafted</p>
-              </div>
-              <div className="text-center">
-                <div className="text-4xl font-bold text-primary mb-2">98%</div>
-                <p className="text-muted-foreground">Customer Satisfaction</p>
-              </div>
-              <div className="text-center">
-                <div className="text-4xl font-bold text-primary mb-2">5 Years</div>
-                <p className="text-muted-foreground">Warranty Coverage</p>
-              </div>
-            </div>
-
-            <div className="bg-muted rounded-lg p-12 text-center">
-              <h2 className="font-serif text-3xl font-bold mb-4">Ready to Transform Your Space?</h2>
-              <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
-                Explore our collection of handcrafted furniture and find the perfect pieces for your home
-              </p>
-              <Button size="lg" asChild>
-                <Link href="/shop">Browse Collection</Link>
-              </Button>
+        {/* Values */}
+        <section className="py-20 bg-muted/30">
+          <div className="container mx-auto px-4">
+            <h2 className="font-serif text-3xl font-bold text-center mb-12">Our Core Values</h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {[
+                {
+                  title: "Quality First",
+                  description: "We never compromise on materials. Only the finest hardwoods, leathers, and textiles make it into our workshop."
+                },
+                {
+                  title: "Sustainability",
+                  description: "Our wood is sourced from responsibly managed forests. We build pieces that last generations, reducing waste."
+                },
+                {
+                  title: "Human Touch",
+                  description: "While we use modern precision where it matters, the soul of our furniture comes from human hands."
+                }
+              ].map((value, i) => (
+                <div key={i} className="p-8 bg-background rounded-xl border border-border shadow-sm">
+                  <h3 className="font-bold text-xl mb-4">{value.title}</h3>
+                  <p className="text-muted-foreground">{value.description}</p>
+                </div>
+              ))}
             </div>
           </div>
         </section>
       </main>
-
       <Footer />
     </div>
   )

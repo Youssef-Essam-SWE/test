@@ -87,12 +87,12 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-muted-foreground hover:text-foreground transition-colors">
+                <Link href="/careers" className="text-muted-foreground hover:text-foreground transition-colors">
                   Careers
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-muted-foreground hover:text-foreground transition-colors">
+                <Link href="/sustainability" className="text-muted-foreground hover:text-foreground transition-colors">
                   Sustainability
                 </Link>
               </li>
@@ -104,22 +104,22 @@ export function Footer() {
             <h4 className="font-semibold mb-4">Support</h4>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link href="#" className="text-muted-foreground hover:text-foreground transition-colors">
+                <Link href="/shipping-returns" className="text-muted-foreground hover:text-foreground transition-colors">
                   Shipping & Returns
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-muted-foreground hover:text-foreground transition-colors">
+                <Link href="/faq" className="text-muted-foreground hover:text-foreground transition-colors">
                   FAQ
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-muted-foreground hover:text-foreground transition-colors">
+                <Link href="/care-guide" className="text-muted-foreground hover:text-foreground transition-colors">
                   Care Guide
                 </Link>
               </li>
               <li>
-                <Link href="#" className="text-muted-foreground hover:text-foreground transition-colors">
+                <Link href="/warranty" className="text-muted-foreground hover:text-foreground transition-colors">
                   Warranty
                 </Link>
               </li>

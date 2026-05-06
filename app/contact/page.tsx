@@ -1,126 +1,105 @@
-"use client"
-
-import type React from "react"
-
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
-import { MapPin, Phone, Mail } from "lucide-react"
+import { Textarea } from "@/components/ui/textarea"
+import { MapPin, Phone, Mail, Clock } from "lucide-react"
 
 export default function ContactPage() {
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-    // Handle form submission
-    alert("Thank you for your message! We will get back to you soon.")
-  }
-
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
+      <main className="flex-1 py-20">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <h1 className="font-serif text-5xl font-bold mb-4">Get in Touch</h1>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Have a question about our products or need help with an order? Our team is here to help.
+            </p>
+          </div>
 
-      <main className="flex-1">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="max-w-5xl mx-auto">
-            <div className="text-center mb-12">
-              <h1 className="font-serif text-4xl font-bold mb-4">Get in Touch</h1>
-              <p className="text-muted-foreground text-lg">Have questions? We would love to hear from you.</p>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
+            {/* Contact Form */}
+            <div className="bg-muted/30 p-8 md:p-12 rounded-2xl border border-border">
+              <h2 className="font-serif text-3xl font-bold mb-8">Send us a message</h2>
+              <form className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div className="space-y-2">
+                    <Label htmlFor="name">Full Name</Label>
+                    <Input id="name" placeholder="John Doe" />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="email">Email Address</Label>
+                    <Input id="email" type="email" placeholder="john@example.com" />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="subject">Subject</Label>
+                  <Input id="subject" placeholder="Inquiry about..." />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="message">Message</Label>
+                  <Textarea id="message" placeholder="Tell us how we can help..." className="min-h-[150px]" />
+                </div>
+                <Button size="lg" className="w-full md:w-auto px-12">Send Message</Button>
+              </form>
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
-              {/* Contact Info */}
+            {/* Contact Info */}
+            <div className="space-y-12">
               <div className="space-y-8">
-                <div>
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
-                      <MapPin className="h-5 w-5 text-primary" />
-                    </div>
-                    <h3 className="font-semibold">Visit Us</h3>
+                <h2 className="font-serif text-3xl font-bold mb-8">Contact Information</h2>
+                
+                <div className="flex gap-4">
+                  <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                    <MapPin className="h-6 w-6 text-primary" />
                   </div>
-                  <p className="text-muted-foreground ml-13">
-                    123 Design Street
-                    <br />
-                    San Francisco, CA 94102
-                    <br />
-                    United States
-                  </p>
+                  <div>
+                    <h3 className="font-bold text-lg">Our Showroom</h3>
+                    <p className="text-muted-foreground leading-relaxed">
+                      123 Design District, Fifth Settlement<br />New Cairo, Egypt
+                    </p>
+                  </div>
                 </div>
 
-                <div>
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
-                      <Phone className="h-5 w-5 text-primary" />
-                    </div>
-                    <h3 className="font-semibold">Call Us</h3>
+                <div className="flex gap-4">
+                  <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                    <Phone className="h-6 w-6 text-primary" />
                   </div>
-                  <p className="text-muted-foreground ml-13">
-                    +1 (555) 123-4567
-                    <br />
-                    Mon-Fri 9am-6pm PST
-                  </p>
+                  <div>
+                    <h3 className="font-bold text-lg">Phone</h3>
+                    <p className="text-muted-foreground">+20 115 032 1340</p>
+                  </div>
                 </div>
 
-                <div>
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center">
-                      <Mail className="h-5 w-5 text-primary" />
-                    </div>
-                    <h3 className="font-semibold">Email Us</h3>
+                <div className="flex gap-4">
+                  <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                    <Mail className="h-6 w-6 text-primary" />
                   </div>
-                  <p className="text-muted-foreground ml-13">
-                    hello@artisanfurniture.com
-                    <br />
-                    support@artisanfurniture.com
-                  </p>
+                  <div>
+                    <h3 className="font-bold text-lg">Email</h3>
+                    <p className="text-muted-foreground">support@artisanfurniture.com</p>
+                  </div>
                 </div>
-              </div>
 
-              {/* Contact Form */}
-              <div className="lg:col-span-2">
-                <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <Label htmlFor="firstName">First Name</Label>
-                      <Input id="firstName" placeholder="John" required />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="lastName">Last Name</Label>
-                      <Input id="lastName" placeholder="Doe" required />
-                    </div>
+                <div className="flex gap-4">
+                  <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                    <Clock className="h-6 w-6 text-primary" />
                   </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="email">Email</Label>
-                    <Input id="email" type="email" placeholder="john@example.com" required />
+                  <div>
+                    <h3 className="font-bold text-lg">Business Hours</h3>
+                    <p className="text-muted-foreground">
+                      Mon - Thu: 10:00 AM - 9:00 PM<br />
+                      Fri - Sat: 11:00 AM - 10:00 PM
+                    </p>
                   </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="phone">Phone Number</Label>
-                    <Input id="phone" type="tel" placeholder="+1 (555) 123-4567" />
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="message">Message</Label>
-                    <Textarea
-                      id="message"
-                      placeholder="Tell us how we can help you..."
-                      className="min-h-[150px]"
-                      required
-                    />
-                  </div>
-
-                  <Button type="submit" size="lg" className="w-full sm:w-auto">
-                    Send Message
-                  </Button>
-                </form>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </main>
-
       <Footer />
     </div>
   )
