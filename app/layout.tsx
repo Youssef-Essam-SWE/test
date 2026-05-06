@@ -11,6 +11,8 @@ const inter = Inter({ subsets: ["latin"] })
 
 // ... existing code ...
 
+import { WhatsAppButton } from "@/components/whatsapp-button"
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -19,7 +21,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} ${playfair.variable} font-sans antialiased`}>
-        <Providers>{children}</Providers>
+        <Providers>
+          {children}
+          <WhatsAppButton />
+        </Providers>
         <Analytics />
       </body>
     </html>
