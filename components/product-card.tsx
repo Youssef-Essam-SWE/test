@@ -11,9 +11,10 @@ import type { Product } from "@/lib/products"
 
 interface ProductCardProps {
   product: Product
+  priority?: boolean
 }
 
-export function ProductCard({ product }: ProductCardProps) {
+export function ProductCard({ product, priority = false }: ProductCardProps) {
   const { isInWishlist, addToWishlist, removeFromWishlist } = useWishlist()
   const isWishlisted = isInWishlist(product.id)
 
@@ -37,6 +38,7 @@ export function ProductCard({ product }: ProductCardProps) {
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             className="object-cover transition-transform group-hover:scale-105"
+            priority={priority}
           />
           <Button
             variant="ghost"
